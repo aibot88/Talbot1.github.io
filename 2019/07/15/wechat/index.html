@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="NLP, Python, Essay">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="微信的结构分析一、微信产品分析之简单的列表微信产品简单列表分析（一）、“互联网文盲”接入互联网&amp;amp;保留原有交际圈解决了部分没有接触过互联网甚至不太认识汉字，更别提英文的老一辈人群没办法学会使用即时通信软件的痛点。 解决方法见图一： 使用与手机号绑定的做法，允许使用多种账号登录方式登陆同一账号，但最终账号的唯一性由手机号确定。而手机号在中国实行实名制，而且有手机的人几乎必然又属于自己的手机号。">
+<meta name="keywords" content="NLP, CS, Python">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dance with Shackle">
+<meta property="og:url" content="http://yoursite.com/2019/07/15/wechat/index.html">
+<meta property="og:site_name" content="Dance with Shackle">
+<meta property="og:description" content="微信的结构分析一、微信产品分析之简单的列表微信产品简单列表分析（一）、“互联网文盲”接入互联网&amp;amp;保留原有交际圈解决了部分没有接触过互联网甚至不太认识汉字，更别提英文的老一辈人群没办法学会使用即时通信软件的痛点。 解决方法见图一： 使用与手机号绑定的做法，允许使用多种账号登录方式登陆同一账号，但最终账号的唯一性由手机号确定。而手机号在中国实行实名制，而且有手机的人几乎必然又属于自己的手机号。">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2019-07-15T05:47:29.782Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Dance with Shackle">
+<meta name="twitter:description" content="微信的结构分析一、微信产品分析之简单的列表微信产品简单列表分析（一）、“互联网文盲”接入互联网&amp;amp;保留原有交际圈解决了部分没有接触过互联网甚至不太认识汉字，更别提英文的老一辈人群没办法学会使用即时通信软件的痛点。 解决方法见图一： 使用与手机号绑定的做法，允许使用多种账号登录方式登陆同一账号，但最终账号的唯一性由手机号确定。而手机号在中国实行实名制，而且有手机的人几乎必然又属于自己的手机号。">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/15/wechat/">
+
+
+
+
+
+  <title> | Dance with Shackle</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dance with Shackle</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/15/wechat/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tang Hangyun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dance with Shackle">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline"></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-15T13:44:08+08:00">
+                2019-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="微信的结构分析"><a href="#微信的结构分析" class="headerlink" title="微信的结构分析"></a>微信的结构分析</h1><h2 id="一、微信产品分析之简单的列表"><a href="#一、微信产品分析之简单的列表" class="headerlink" title="一、微信产品分析之简单的列表"></a>一、微信产品分析之简单的列表</h2><h3 id="微信产品简单列表分析"><a href="#微信产品简单列表分析" class="headerlink" title="微信产品简单列表分析"></a>微信产品简单列表分析</h3><h4 id="（一）、“互联网文盲”接入互联网-amp-保留原有交际圈"><a href="#（一）、“互联网文盲”接入互联网-amp-保留原有交际圈" class="headerlink" title="（一）、“互联网文盲”接入互联网&amp;保留原有交际圈"></a>（一）、“互联网文盲”接入互联网&amp;保留原有交际圈</h4><p>解决了部分没有接触过互联网甚至不太认识汉字，更别提英文的老一辈人群没办法学会使用即时通信软件的痛点。</p>
+<p>解决方法见图一：</p>
+<p>使用与手机号绑定的做法，允许使用多种账号登录方式登陆同一账号，但最终账号的唯一性由手机号确定。而手机号在中国实行实名制，而且有手机的人几乎必然又属于自己的手机号。通过手机号添加好友，一键式朋友圈平台转移。</p>
+<p>图一</p>
+<p>图二</p>
+<h4 id="（二）、超越文字的更强的表达能力"><a href="#（二）、超越文字的更强的表达能力" class="headerlink" title="（二）、超越文字的更强的表达能力"></a>（二）、超越文字的更强的表达能力</h4><p>见图二，语言文字的承载信息的能力有限，有些场景大可以长话短说但是使用文字却破费笔墨去描述，低延迟的即时语音通信软件使得声音得以成为网络世界另一种承载信息的方式。更快捷更简单更容易上手。</p>
+<h4 id="（三）、简单的交互逻辑-amp-易学习性"><a href="#（三）、简单的交互逻辑-amp-易学习性" class="headerlink" title="（三）、简单的交互逻辑&amp;易学习性"></a>（三）、简单的交互逻辑&amp;易学习性</h4><p>通过下图二可以直观的感受到微信基本交互逻辑的简单，上手迅速，在功能臃肿的情况下，尽可能的减少初次使用设备的学习成本。因为基本的交互逻辑十分的简单所以学习成本低。</p>
+<h4 id="（四）、安全性-amp-私密性-amp-设备连通性差"><a href="#（四）、安全性-amp-私密性-amp-设备连通性差" class="headerlink" title="（四）、安全性&amp;私密性&amp;设备连通性差"></a>（四）、安全性&amp;私密性&amp;设备连通性差</h4><p>见图三，微信的消息记录不可迁移到随意的设备，不可保存到随意的电脑位置，删除后不可恢复，删除消息列表就删除消息记录，重装软件自动清空消息列表，出手机版以外其他版本微信只支持聊天和文件共享，其他版本微信的登陆需要手机版微信的授权。</p>
+<p>图三</p>
+<h4 id="（五）、刚需性-amp-便捷性-amp-创新性"><a href="#（五）、刚需性-amp-便捷性-amp-创新性" class="headerlink" title="（五）、刚需性&amp;便捷性&amp;创新性"></a>（五）、刚需性&amp;便捷性&amp;创新性</h4><p>融合聊天+钱包+视频+阅读+创作；闭合生态，使得用户可以使用一个软件满足自身全部的需求；因此几乎没有微信老用户退出微信；不断更迭的小程序规则以及不断涌现的小程序体现其创新性</p>
+<h4 id="（六）、低效-amp-缺少快捷操作-amp-功能过度冗余"><a href="#（六）、低效-amp-缺少快捷操作-amp-功能过度冗余" class="headerlink" title="（六）、低效&amp;缺少快捷操作&amp;功能过度冗余"></a>（六）、低效&amp;缺少快捷操作&amp;功能过度冗余</h4><p>为了降低初次学习的学习成本，微信的一级菜单存在大量的功能冗余，导致所见即所得的宝贵的一级菜单按键被重复出现却使用率未必很高的功能占据，例如：添加好友，扫一扫，发起群聊。为了进一步降低学习成本，微信并没有有效的利用长按操作响应。</p>
+<h4 id="（七）、不存在不可超越的壁垒-amp-护城河多却不深"><a href="#（七）、不存在不可超越的壁垒-amp-护城河多却不深" class="headerlink" title="（七）、不存在不可超越的壁垒&amp;护城河多却不深"></a>（七）、不存在不可超越的壁垒&amp;护城河多却不深</h4><p>尽管微信是一个了不起的产品，但是微信的所有功能都是可替代的。因此微信真正王牌的核心的技术壁垒还没有巩固。单独支付或者聊天，比微信功能更强大的app有对手的支付宝和自家的QQ，小视频领域有抖音快手，语音领域有飞信、子弹短信，办公领域有金山云文档，小程序领域有阿里和百度。</p>
+<h3 id="二、微信产品设计分析之简单的思维导图"><a href="#二、微信产品设计分析之简单的思维导图" class="headerlink" title="二、微信产品设计分析之简单的思维导图"></a>二、微信产品设计分析之简单的思维导图</h3><h4 id="微信产品功能设计图"><a href="#微信产品功能设计图" class="headerlink" title="微信产品功能设计图"></a>微信产品功能设计图</h4><p>通过上面的思维导图，我将就四个一级界面逐个分析。</p>
+<p>（一）、“主页”界面子导图</p>
+<p>首先，我们最常用的“主页”界面的子目录是最少的；这就是微信让很多老年人喜欢的最重要原因，主页的核心功能区不仅少还有一个特点就是冗余度很高，主要体现在以下几个方面：</p>
+<ol>
+<li><p>几乎每一个界面上层都有搜索按方便用户找到所需要的功能（虽然这样会拖慢程序运行效率就是了）</p>
+</li>
+<li><p>在添加朋友一项，微信团队下足了功夫，不仅将添加群聊这个最常用的添加朋友按键直接从添加朋友的子目录单独放出来，而且排序在添加朋友的按键之前。</p>
+</li>
+<li><p>功能方面的冗余，主要是创建一种更快捷的方式到达相应的子功能：小程序，公众号，最近联系人，文件传输，QQ邮箱。</p>
+</li>
+</ol>
+<p>关于主页目录的本身槽点并不太多，但是因为精简的原则，</p>
+<ol>
+<li><p>主页的功能映射多半是阉割了的，也就是说，你通过主页的收付款进不了钱包界面也就不能使用购物和大众点评的外卖了。</p>
+</li>
+<li><p>另一方面可能是出于商业原因，微信的QQ邮箱只能看看标题啥的，及其不好用，而没有集成网页版的QQ邮箱，然而众所周知微信是自带一个浏览器的，也就是说集成一个网页版的QQ邮箱不过是一行代码的问题，但是腾讯就是逼你下载QQ邮箱。</p>
+</li>
+</ol>
+<p>“主页思维导图”<br>（二）、“发现页”子导图</p>
+<p>其次，我们来看看使用频率第二高的“发现页”面；发现页面的子目录数也比较少；同时发现页也是微信试水新产品的主要阵地，一方面会想要去玩朋友圈的人多多少少有一点空闲的时间，不会反感新推出来的新玩意儿，这样就可以很好的引流，另一方面也不会打扰到单纯想用微信进行聊天通讯的人。发现页的“举重若轻”主要表现在以下几个方面：</p>
+<ol>
+<li><p>还是功能的映射，重复在主页上面的扫一扫功能。</p>
+</li>
+<li><p>进一步强化好友添加的途径，加入了附近的人和漂流瓶等玩法，既是游戏又是引流的好办法</p>
+</li>
+<li><p>推广一些打发时间的小玩意儿：看一看，搜一搜，购物，游戏，小程序等。</p>
+</li>
+</ol>
+<p>发现页做的真的是一个非常漂亮的，如果非要说缺点可能就是朋友圈的使用逻辑上，无法做到隐私和分享的合二为一，在这两者的制衡中，微信团队选择了隐私当先，另外考虑到部分受众对文字的不熟实，微信团队试图引导人们进行朋友圈的照片共享；因此朋友圈的可玩性被降低了一些。例如：</p>
+<ol>
+<li>不能转发，不能看到公众号文章的内容梗概，没有图片不能发文字朋友圈。</li>
+</ol>
+<p>发现页思维导图<br>（三）、“联系人”子导图</p>
+<p>然后，我们再来看看“联系人”页；这个页面实在是有点臃肿了，各种名目被糅杂在里面。而且有部分是我们几乎不会去用到的。所以这部分优点着实乏善可陈，唯独几个亮眼的搜索、公众号我们已经论述过了，这里不费笔墨了。倒是缺点值得枚举。</p>
+<ol>
+<li><p>二级目录疯狂浪费：添加联系人和新的朋友，子目录几乎一模一样；反正我是不懂这两个为什么不合并起来。</p>
+</li>
+<li><p>保存的群聊没有标签设置，令人绝望。</p>
+</li>
+<li><p>联系人的标签设置形同虚设，都设置标签了，你就不能自动帮我分个组？先分组再按字母排序不好吗？</p>
+</li>
+<li><p>公众号缺少标签+1。</p>
+</li>
+</ol>
+<p>通讯录思维导图<br>（四）、“我”界面子导图</p>
+<p>最后，我们来看看平时都不太乐意瞅一眼的“我”界面；这个界面真的功能太多了，有的时候想要关闭开启朋友圈还要百度一下在哪里，确实难记而且因为难记平时也没多少人愿意点进来。这个界面放下了所有微信开放给用户的权限和功能（除了添加和删除联系人），所以看上去这个界面的条目着实繁多，不过我仔细分析了一下惊喜的发现在这里微信没有放下任何一个重复的功能。由于这个界面涉及整个微信的运行，其实它相当于是映射的最终对象，前面三个页面的映射基本都是对这一界面的功能的映射。要说优点：</p>
+<ol>
+<li><p>功能齐全</p>
+</li>
+<li><p>条理清晰</p>
+</li>
+</ol>
+<p>对于这样一个我平时需要百度才能搞清楚的界面，让我说他的优点多少有点难为我，还是将笔墨放在他的缺点上面吧：</p>
+<ol>
+<li><p>太复杂</p>
+</li>
+<li><p>缺少导航和帮助</p>
+</li>
+<li><p>点击头像不能直接查看更换头像</p>
+</li>
+<li><p>账单页面隐藏在5级目录里，不认真找根本找不到</p>
+</li>
+<li><p>三四级目录的分类依据不是以用户为导向。</p>
+</li>
+</ol>
+<p>“我”界面思维导图</p>
+<h3 id="三、总结"><a href="#三、总结" class="headerlink" title="三、总结"></a>三、总结</h3><p>花了一天做这个微信产品的产品分析，最大之感触皆汇于唏嘘微信的成功——精简的基本功能和冗杂却完备的附加功能，微信在两个极端间做到了一种平衡，这是怎样一种举重若轻的境界，当真令人倾佩。</p>
+<p>Ps:本文同步发表于个人博客(需翻墙访问):Talbot1.github.io和简书平台(国内平台,欢迎关注和点赞)Talbot1</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/15/wordCloud/" rel="next" title="基于jiebe分词的词云制作app">
+                <i class="fa fa-chevron-left"></i> 基于jiebe分词的词云制作app
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Tang Hangyun</p>
+              <p class="site-description motion-element" itemprop="description">A blog contain technology, reading experience and work experience.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#微信的结构分析"><span class="nav-number">1.</span> <span class="nav-text">微信的结构分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#一、微信产品分析之简单的列表"><span class="nav-number">1.1.</span> <span class="nav-text">一、微信产品分析之简单的列表</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#微信产品简单列表分析"><span class="nav-number">1.1.1.</span> <span class="nav-text">微信产品简单列表分析</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#（一）、“互联网文盲”接入互联网-amp-保留原有交际圈"><span class="nav-number">1.1.1.1.</span> <span class="nav-text">（一）、“互联网文盲”接入互联网&amp;保留原有交际圈</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（二）、超越文字的更强的表达能力"><span class="nav-number">1.1.1.2.</span> <span class="nav-text">（二）、超越文字的更强的表达能力</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（三）、简单的交互逻辑-amp-易学习性"><span class="nav-number">1.1.1.3.</span> <span class="nav-text">（三）、简单的交互逻辑&amp;易学习性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（四）、安全性-amp-私密性-amp-设备连通性差"><span class="nav-number">1.1.1.4.</span> <span class="nav-text">（四）、安全性&amp;私密性&amp;设备连通性差</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（五）、刚需性-amp-便捷性-amp-创新性"><span class="nav-number">1.1.1.5.</span> <span class="nav-text">（五）、刚需性&amp;便捷性&amp;创新性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（六）、低效-amp-缺少快捷操作-amp-功能过度冗余"><span class="nav-number">1.1.1.6.</span> <span class="nav-text">（六）、低效&amp;缺少快捷操作&amp;功能过度冗余</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#（七）、不存在不可超越的壁垒-amp-护城河多却不深"><span class="nav-number">1.1.1.7.</span> <span class="nav-text">（七）、不存在不可超越的壁垒&amp;护城河多却不深</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#二、微信产品设计分析之简单的思维导图"><span class="nav-number">1.1.2.</span> <span class="nav-text">二、微信产品设计分析之简单的思维导图</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#微信产品功能设计图"><span class="nav-number">1.1.2.1.</span> <span class="nav-text">微信产品功能设计图</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#三、总结"><span class="nav-number">1.1.3.</span> <span class="nav-text">三、总结</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tang Hangyun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
