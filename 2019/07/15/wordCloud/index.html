@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-Hans">
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Python,NLP,GUI,">
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="快速使用需要安装的包tkinter  pickle  wordcloud  pylab  matplotlib jieba PIL numpy  os  imageio(ps:若包未安装,请使用pip install package_name进行包的安装.) 最为核心的函数详解:WorldCloud函数wc = WordCloud(background_color=&amp;quot;white&amp;quot">
+<meta name="keywords" content="Python,NLP,GUI">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于jiebe分词的词云制作app">
+<meta property="og:url" content="http://yoursite.com/2019/07/15/wordCloud/index.html">
+<meta property="og:site_name" content="Dance with Bonds">
+<meta property="og:description" content="快速使用需要安装的包tkinter  pickle  wordcloud  pylab  matplotlib jieba PIL numpy  os  imageio(ps:若包未安装,请使用pip install package_name进行包的安装.) 最为核心的函数详解:WorldCloud函数wc = WordCloud(background_color=&amp;quot;white&amp;quot">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14938305-3f5bdf8fb06fd676.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14938305-1deb37dcc6f0d016.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14938305-ab4de4c16af24d4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14938305-5de7662232744b33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:image" content="https://upload-images.jianshu.io/upload_images/14938305-5afba769c9473c9c.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2019-07-15T03:09:48.715Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="基于jiebe分词的词云制作app">
+<meta name="twitter:description" content="快速使用需要安装的包tkinter  pickle  wordcloud  pylab  matplotlib jieba PIL numpy  os  imageio(ps:若包未安装,请使用pip install package_name进行包的安装.) 最为核心的函数详解:WorldCloud函数wc = WordCloud(background_color=&amp;quot;white&amp;quot">
+<meta name="twitter:image" content="https://upload-images.jianshu.io/upload_images/14938305-3f5bdf8fb06fd676.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/07/15/wordCloud/">
+
+
+
+
+
+  <title>基于jiebe分词的词云制作app | Dance with Bonds</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Dance with Bonds</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br>
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>
+            
+            公益404
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/15/wordCloud/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Tang Hangyun">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Dance with Bonds">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">基于jiebe分词的词云制作app</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-07-15T10:50:52+08:00">
+                2019-07-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python程序/" itemprop="url" rel="index">
+                    <span itemprop="name">Python程序</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Python程序/NLP相关/" itemprop="url" rel="index">
+                    <span itemprop="name">NLP相关</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="快速使用"><a href="#快速使用" class="headerlink" title="快速使用"></a>快速使用</h2><h3 id="需要安装的包"><a href="#需要安装的包" class="headerlink" title="需要安装的包"></a>需要安装的包</h3><p>tkinter  pickle  wordcloud  pylab  matplotlib jieba PIL numpy  os  imageio<br>(ps:若包未安装,请使用pip install package_name进行包的安装.)</p>
+<h3 id="最为核心的函数详解-WorldCloud函数"><a href="#最为核心的函数详解-WorldCloud函数" class="headerlink" title="最为核心的函数详解:WorldCloud函数"></a>最为核心的函数详解:WorldCloud函数</h3><pre><code>wc = WordCloud(background_color=&quot;white&quot;,random_state =2,scale=1,mask=alice_coloring,stopwords=stopwords,collocations=False, font_path=myfont, width=1400, height=1400, margin=2)</code></pre><h3 id="关于WorldCloud函数的简单讲解"><a href="#关于WorldCloud函数的简单讲解" class="headerlink" title="关于WorldCloud函数的简单讲解"></a>关于WorldCloud函数的简单讲解</h3><ol>
+<li>background_color来改变背景颜色,只实验了white和black其他未验证.</li>
+<li>使用scale来改变词云图像的精细度(数值越大越精细也越耗时;＞8可能要长达数分钟(测试集为10w字的说说)</li>
+<li>使用font_path = myfont来改变词云的字体(汉语词云必须依赖自定义的字体库)</li>
+<li>min_font_size最小字体大小(默认是4)</li>
+<li>contour_width词云轮廓的描绘,默认是0不描绘</li>
+<li>关于WorldCloud函数的详解在文章的最后</li>
+</ol>
+<h3 id="词云生成的核心代码"><a href="#词云生成的核心代码" class="headerlink" title="词云生成的核心代码"></a>词云生成的核心代码</h3><pre><code>def wordcloud(d,str1,str2):
+    alice_coloring = np.array(Image.open(path.join(d,str2)))#背景图片
+    stopwords=set(STOPWORDS)
+    stopwords.add(&quot;said&quot;)
+    image_colors = ImageColorGenerator(alice_coloring)
+    myfont = (r&apos;tyj.ttf&apos;) 
+    wc = WordCloud(background_color=&quot;white&quot;,random_state =2,scale=1,mask=alice_coloring,stopwords=stopwords,collocations=False, font_path=myfont, width=1400, height=1400, margin=2)
+    txt = open(path.join(d,str1),encoding=&apos;utf-8&apos;).read()
+    txt_jieba = jieba.cut(txt,cut_all = True)
+    txt_finish = &quot; &quot;.join(txt_jieba)
+
+    wc.generate(txt_finish)
+    plt.imshow(alice_coloring)
+    plt.imshow(wc)
+    plt.axis(&quot;off&quot;)
+    plt.show()
+    wc.to_file(path.join(&quot;名称.jpg&quot;))
+wordcloud(d,txt,picture</code></pre><h3 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h3><pre><code>import tkinter as tk  # 使用Tkinter前需要先导入
+import tkinter.messagebox
+import pickle
+from wordcloud import WordCloud ,STOPWORDS, ImageColorGenerator
+from pylab import matplotlib,mpl
+from matplotlib.font_manager import FontManager
+import matplotlib.pyplot as plt
+import matplotlib
+import jieba
+from PIL import Image
+import numpy as np
+from os import path
+from imageio import *
+
+window = tk.Tk()
+
+window.title(&apos;WordCloud Demo Application&apos;)
+
+window.geometry(&apos;400x300&apos;)  # 这里的乘是小x
+
+canvas = tk.Canvas(window, width=400, height=135, bg=&apos;green&apos;)
+image_file = tk.PhotoImage(file=&apos;pic.gif&apos;)
+image = canvas.create_image(200, 0, anchor=&apos;n&apos;, image=image_file)
+canvas.pack(side=&apos;top&apos;)
+tk.Label(window, text=&apos;Welcome&apos;,font=(&apos;Arial&apos;, 16)).pack()
+
+tk.Label(window, text=&apos;Txt_Input    &apos;, font=(&apos;Arial&apos;, 14)).place(x=10, y=170)
+tk.Label(window, text=&apos;Picture_Input&apos;, font=(&apos;Arial&apos;, 14)).place(x=10, y=210)
+
+var_txt = tk.StringVar()
+var_txt.set(&apos;1.txt&apos;)
+entry_txt = tk.Entry(window, textvariable=var_txt, font=(&apos;Arial&apos;, 14))
+entry_txt.place(x=130,y=175)
+var_picture = tk.StringVar()
+var_picture.set(&apos;love.png&apos;)
+entry_picture = tk.Entry(window, textvariable=var_picture, font=(&apos;Arial&apos;, 14))
+entry_picture.place(x=130,y=215)
+
+d = path.dirname(__file__) if &quot;__file__&quot; in locals() else os.getcwd()#这部没有明白,是从官方文档中抄过来的
+
+def submit():
+
+    # 这两行代码就是获取用户输入的txt和picture
+    txt = var_txt.get()
+    picture = var_picture.get()
+    print(txt,picture)
+    def wordcloud(d,str1,str2):
+        alice_coloring = np.array(Image.open(path.join(d,str2)))#背景图片
+        stopwords=set(STOPWORDS)
+        stopwords.add(&quot;said&quot;)
+        image_colors = ImageColorGenerator(alice_coloring)
+
+        myfont = (r&apos;tyj.ttf&apos;) 
+        wc = WordCloud(background_color=&quot;white&quot;,random_state =2,scale=1,mask=alice_coloring,stopwords=stopwords,collocations=False, font_path=myfont, width=1400, height=1400, margin=2)
+        txt = open(path.join(d,str1),encoding=&apos;utf-8&apos;).read()
+        txt_jieba = jieba.cut(txt,cut_all = True)
+        txt_finish = &quot; &quot;.join(txt_jieba)
+
+        wc.generate(txt_finish)
+        plt.imshow(alice_coloring)
+        plt.imshow(wc)
+        plt.axis(&quot;off&quot;)
+        plt.show()
+        wc.to_file(path.join(&quot;名称.jpg&quot;))
+    wordcloud(d,txt,picture)
+btn_login = tk.Button(window, text=&apos;Submit&apos;, command=submit)
+btn_login.place(x=190, y=240)
+window.mainloop()</code></pre><h2 id="详细使用说明"><a href="#详细使用说明" class="headerlink" title="详细使用说明"></a>详细使用说明</h2><h3 id="纯用户的使用说明"><a href="#纯用户的使用说明" class="headerlink" title="纯用户的使用说明"></a>纯用户的使用说明</h3><ol>
+<li>在安装好相应的开发环境和扩展包之后,  并确认你也已经可以成功的运行hello_world.py程序.<pre><code>1.1.在此基础上,将全部代码复制粘贴到你的hello_world.py文件中解释并运行.若能出现如下的图片则表示运行成功![程序解释成功的图片.png](https://upload-images.jianshu.io/upload_images/14938305-b3748338bc1dd5a5.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
+1.2这时候需要将您希望制作的文档和图片放在和.py文件的文件夹中;在txt_input和picture_input中输入你的文档名称和图片名称(名称都需要带.txt和.png,目前只支持这两种格式)
+ 1.3点击submit并耐心等待1~2min程序给出词云.</code></pre><img src="https://upload-images.jianshu.io/upload_images/14938305-3f5bdf8fb06fd676.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="程序执行过程中的图.png"><br><img src="https://upload-images.jianshu.io/upload_images/14938305-1deb37dcc6f0d016.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="放大后的图像.png"><br><img src="https://upload-images.jianshu.io/upload_images/14938305-ab4de4c16af24d4c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="原图.png"><pre><code>1.4关于python小白制作词云,我建议去一下两个网站[免费网站:图悦](http://www.picdata.cn/), [收费网站:易词云](http://yciyun.com/). 如果你坚持要使用这个程序,并且觉得花费时间是值得的,那我只能说咱们私聊;邮件请发&lt;hangyuntang@gmail.com&gt;.个人感觉易词云的功能比这个库函数的功能只多不少.</code></pre></li>
+</ol>
+<h3 id="程序员的使用指南"><a href="#程序员的使用指南" class="headerlink" title="程序员的使用指南"></a>程序员的使用指南</h3><ol>
+<li>参阅github网站<a href="https://github.com/amueller/word_cloud" target="_blank" rel="noopener">https://github.com/amueller/word_cloud</a></li>
+<li>与我交流<a href="mailto:&#x68;&#x61;&#x6e;&#x67;&#x79;&#117;&#x6e;&#x74;&#x61;&#110;&#103;&#64;&#x71;&#x71;&#46;&#99;&#x6f;&#x6d;" target="_blank" rel="noopener">&#x68;&#x61;&#x6e;&#x67;&#x79;&#117;&#x6e;&#x74;&#x61;&#110;&#103;&#64;&#x71;&#x71;&#46;&#99;&#x6f;&#x6d;</a>(只回复技术交流贴,别问我怎么用)</li>
+</ol>
+<h2 id="关于WorldCloud函数的详解"><a href="#关于WorldCloud函数的详解" class="headerlink" title="关于WorldCloud函数的详解"></a>关于WorldCloud函数的详解</h2><h3 id="font-path-string"><a href="#font-path-string" class="headerlink" title="font_path : string"></a>font_path : string</h3><pre><code>Font path to the font that will be used (OTF or TTF).
+Defaults to DroidSansMono path on a Linux machine. If you are on
+another OS or don&apos;t have this font, you need to adjust this path.
+将使用的字体的字体路径（OTF或TTF）。
+默认为Linux机器上的DroidSansMono路径。如果你在
+另一个操作系统或没有此字体，您需要调整此路径。</code></pre><hr>
+<h3 id="width-int-default-400"><a href="#width-int-default-400" class="headerlink" title="width:int (default=400)"></a>width:int (default=400)</h3><pre><code>Width of the canvas.
+画布的宽度 默认是400</code></pre><hr>
+<h3 id="height-int-default-200"><a href="#height-int-default-200" class="headerlink" title="height : int (default=200)"></a>height : int (default=200)</h3><pre><code>Height of the canvas.
+画布的高度 默认是200</code></pre><hr>
+<h3 id="prefer-horizontal-float-default-0-90"><a href="#prefer-horizontal-float-default-0-90" class="headerlink" title="prefer_horizontal : float (default=0.90)"></a>prefer_horizontal : float (default=0.90)</h3><pre><code>The ratio of times to try horizontal fitting as opposed to vertical.
+If prefer_horizontal &lt; 1, the algorithm will try rotating the word
+if it doesn&apos;t fit. (There is currently no built-in way to get only
+vertical words.)
+尝试水平拟合该词(画布中有些词是歪的的始作俑者),＞1就尽量使词语水平;默认0.9.</code></pre><hr>
+<h3 id="mask-nd-array-or-None-default-None"><a href="#mask-nd-array-or-None-default-None" class="headerlink" title="mask : nd-array or None (default=None)"></a>mask : nd-array or None (default=None)</h3><pre><code>If not None, gives a binary mask on where to draw words. If mask is not
+None, width and height will be ignored and the shape of mask will be
+used instead. All white (#FF or #FFFFFF) entries will be considerd
+&quot;masked out&quot; while other entries will be free to draw on. [This
+changed in the most recent version!]
+面具是用来设置词云的底图的,注意透明的底图会无法识别.</code></pre><hr>
+<h3 id="contour-width-float-default-0"><a href="#contour-width-float-default-0" class="headerlink" title="contour_width: float (default=0)"></a>contour_width: float (default=0)</h3><pre><code>If mask is not None and contour_width &gt; 0, draw the mask contour.
+如果mask不是none并且contour_width&gt;0会描述词云的轮廓,默认为0不描绘轮廓</code></pre><hr>
+<h3 id="contour-color-color-value-default-”black”"><a href="#contour-color-color-value-default-”black”" class="headerlink" title="contour_color: color value (default=”black”)"></a>contour_color: color value (default=”black”)</h3><pre><code>Mask contour color.
+轮廓的颜色,默认是黑色</code></pre><hr>
+<h3 id="scale-float-default-1"><a href="#scale-float-default-1" class="headerlink" title="scale : float (default=1)"></a>scale : float (default=1)</h3><pre><code>Scaling between computation and drawing. For large word-cloud images,
+using scale instead of larger canvas size is significantly faster, but
+might lead to a coarser fit for the words.
+精细度设置(越打越精细,速度越慢)</code></pre><hr>
+<h3 id="min-font-size-int-default-4"><a href="#min-font-size-int-default-4" class="headerlink" title="min_font_size : int (default=4)"></a>min_font_size : int (default=4)</h3><pre><code>Smallest font size to use. Will stop when there is no more room in this
+size.
+最小字体</code></pre><hr>
+<h3 id="font-step-int-default-1"><a href="#font-step-int-default-1" class="headerlink" title="font_step : int (default=1)"></a>font_step : int (default=1)</h3><pre><code>Step size for the font. font_step &gt; 1 might speed up computation but
+give a worse fit.
+字体增长的步长</code></pre><hr>
+<h3 id="max-words-number-default-200"><a href="#max-words-number-default-200" class="headerlink" title="max_words : number (default=200)"></a>max_words : number (default=200)</h3><pre><code>The maximum number of words.
+最大的单词数</code></pre><hr>
+<h3 id="stopwords-set-of-strings-or-None"><a href="#stopwords-set-of-strings-or-None" class="headerlink" title="stopwords : set of strings or None"></a>stopwords : set of strings or None</h3><pre><code>The words that will be eliminated. If None, the build-in STOPWORDS
+list will be used. Ignored if using generate_from_frequencies.
+停用字
+字符串集或无将要消除的话。如果为None，则内置STOPWORDS
+列表将被使用。如果使用generate_from_frequencies则忽略。
+笔者也不知道这玩意儿干什么用的</code></pre><hr>
+<h3 id="background-color-color-value-default-”black”"><a href="#background-color-color-value-default-”black”" class="headerlink" title="background_color : color value (default=”black”)"></a>background_color : color value (default=”black”)</h3><pre><code>Background color for the word cloud image.
+背景色:默认黑</code></pre><hr>
+<h3 id="max-font-size-int-or-None-default-None"><a href="#max-font-size-int-or-None-default-None" class="headerlink" title="max_font_size : int or None (default=None)"></a>max_font_size : int or None (default=None)</h3><pre><code>Maximum font size for the largest word. If None, height of the image is
+used.
+最大的字体大小</code></pre><hr>
+<h3 id="mode-string-default-”RGB”"><a href="#mode-string-default-”RGB”" class="headerlink" title="mode : string (default=”RGB”)"></a>mode : string (default=”RGB”)</h3><pre><code>Transparent background will be generated when mode is &quot;RGBA&quot; and background_color is None.
+无背景色,模式选择为RGBA时将生成透明背景</code></pre><hr>
+<h3 id="relative-scaling-float-default-’auto’"><a href="#relative-scaling-float-default-’auto’" class="headerlink" title="relative_scaling : float (default=’auto’)"></a>relative_scaling : float (default=’auto’)</h3><pre><code>Importance of relative word frequencies for font-size. With
+relative_scaling=0, only word-ranks are considered. With
+relative_scaling=1, a word that is twice as frequent will have twice
+the size. If you want to consider the word frequencies and not only
+their rank, relative_scaling around .5 often looks good.
+If &apos;auto&apos; it will be set to 0.5 unless repeat is true, in which
+case it will be set to 0.
+.. versionchanged: 2.0
+Default is now &apos;auto&apos;.
+字出现的频率和它尺寸的相关程度。若为relative_scaling = 0，则只考虑单词排名(单词出现次数与字体大小无关)。
+若为relative_scaling = 1，则单词的大小与出现次数全相关。如果你想考虑单词频率而不仅仅是他们的排名，相对于.5左右，通常看起来不错。如果&apos;auto&apos;，它将被设置为0.5，除非repeat为true，其中case它将被设置为0。.. versionchanged：2.0默认现在是“自动”。</code></pre><hr>
+<h3 id="color-func-callable-default-None"><a href="#color-func-callable-default-None" class="headerlink" title="color_func : callable, default=None"></a>color_func : callable, default=None</h3><pre><code>Callable with parameters word, font_size, position, orientation,
+font_path, random_state that returns a PIL color for each word.
+Overwrites &quot;colormap&quot;.
+See colormap for specifying a matplotlib colormap instead.
+To create a word cloud with a single color, use
+``color_func=lambda *args, **kwargs: &quot;white&quot;``.
+The single color can also be specified using RGB code. For example
+``color_func=lambda *args, **kwargs: (255,0,0)`` sets color to red.
+regexp : string or None (optional)
+Regular expression to split the input text into tokens in process_text.
+If None is specified, ``r&quot;\w[\w&apos;]+&quot;`` is used. Ignored if using
+generate_from_frequencies.
+每个词的色彩映射:
+可以使用参数word，font_size，position，orientation，
+font_path，random_state，返回每个单词的PIL颜色。覆盖“色彩映射”。
+请参阅colormap以指定matplotlib色彩映射。
+要创建单色的文字云，请使用``color_func = lambda * args，** kwargs：“white”``。也可以使用RGB代码指定单色。例如``color_func = lambda * args，** kwargs：（255,0,0）``将颜色设置为红色。
+regexp：string或None（可选）正则表达式将输入文本拆分为process_text中的标记。如果指定None，则使用``r“\ w [\ w&apos;] +”``。
+collocations : bool, default=True
+Whether to include collocations 
+(bigrams) of two words. Ignored if using
+generate_from_frequencies.
+是否搭配两个字(组成词组),如果使用频率省成法可忽略此项
+(笔者猜测是英语的专用形式,汉语应该没啥用)</code></pre><p><a href="https://github.com/amueller/word_cloud" target="_blank" rel="noopener">https://github.com/amueller/word_cloud</a></p>
+<hr>
+<h3 id="复现程序功能需要用到的素材"><a href="#复现程序功能需要用到的素材" class="headerlink" title="复现程序功能需要用到的素材"></a>复现程序功能需要用到的素材</h3><p><img src="https://upload-images.jianshu.io/upload_images/14938305-5de7662232744b33.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="love.png"></p>
+<p><img src="https://upload-images.jianshu.io/upload_images/14938305-5afba769c9473c9c.gif?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="pic.gif"></p>
+<p>文本数据 和字体数据移步百度云盘进行下载:<br>链接: <a href="https://pan.baidu.com/s/14Q6Gt6GCjPcC3uYd5VrpNQ" target="_blank" rel="noopener">https://pan.baidu.com/s/14Q6Gt6GCjPcC3uYd5VrpNQ</a> 提取码: pihb</p>
+<h3 id="致谢和引用"><a href="#致谢和引用" class="headerlink" title="致谢和引用"></a>致谢和引用</h3><ol>
+<li>引用了简书和CSDN三位作者的代码;但是我忘了他们的原文链接了,如有冒犯,我会进行覆写.</li>
+<li>如果原作者想要被挂表扬墙,我一定会乐意效劳的</li>
+<li>主引还是tkinter的官方开发文档和wordcloud的github文档</li>
+</ol>
+<h4 id="ps-1-本文为学生习作-应用于商业的行为是不被允许的-2-欢迎讨论词云制作的具体细节以及GUI制作和网络编程的实践-3-作者的最终目标是做一个免费易用但是比图悦功能更丰富的网络词云制作程序"><a href="#ps-1-本文为学生习作-应用于商业的行为是不被允许的-2-欢迎讨论词云制作的具体细节以及GUI制作和网络编程的实践-3-作者的最终目标是做一个免费易用但是比图悦功能更丰富的网络词云制作程序" class="headerlink" title="ps: 1.本文为学生习作,应用于商业的行为是不被允许的. 2.欢迎讨论词云制作的具体细节以及GUI制作和网络编程的实践. 3.作者的最终目标是做一个免费易用但是比图悦功能更丰富的网络词云制作程序"></a>ps: 1.本文为学生习作,应用于商业的行为是不被允许的. 2.欢迎讨论词云制作的具体细节以及GUI制作和网络编程的实践. 3.作者的最终目标是做一个免费易用但是比图悦功能更丰富的网络词云制作程序</h4>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Python/" rel="tag"># Python</a>
+          
+            <a href="/tags/NLP/" rel="tag"># NLP</a>
+          
+            <a href="/tags/GUI/" rel="tag"># GUI</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/15/hello-world/" rel="next" title="Hello World">
+                <i class="fa fa-chevron-left"></i> Hello World
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">Tang Hangyun</p>
+              <p class="site-description motion-element" itemprop="description">A blog contain technology, reading experience and work experience.</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">3</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#快速使用"><span class="nav-number">1.</span> <span class="nav-text">快速使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#需要安装的包"><span class="nav-number">1.1.</span> <span class="nav-text">需要安装的包</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最为核心的函数详解-WorldCloud函数"><span class="nav-number">1.2.</span> <span class="nav-text">最为核心的函数详解:WorldCloud函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于WorldCloud函数的简单讲解"><span class="nav-number">1.3.</span> <span class="nav-text">关于WorldCloud函数的简单讲解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#词云生成的核心代码"><span class="nav-number">1.4.</span> <span class="nav-text">词云生成的核心代码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#完整代码"><span class="nav-number">1.5.</span> <span class="nav-text">完整代码</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#详细使用说明"><span class="nav-number">2.</span> <span class="nav-text">详细使用说明</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#纯用户的使用说明"><span class="nav-number">2.1.</span> <span class="nav-text">纯用户的使用说明</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#程序员的使用指南"><span class="nav-number">2.2.</span> <span class="nav-text">程序员的使用指南</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关于WorldCloud函数的详解"><span class="nav-number">3.</span> <span class="nav-text">关于WorldCloud函数的详解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#font-path-string"><span class="nav-number">3.1.</span> <span class="nav-text">font_path : string</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#width-int-default-400"><span class="nav-number">3.2.</span> <span class="nav-text">width:int (default=400)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#height-int-default-200"><span class="nav-number">3.3.</span> <span class="nav-text">height : int (default=200)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#prefer-horizontal-float-default-0-90"><span class="nav-number">3.4.</span> <span class="nav-text">prefer_horizontal : float (default=0.90)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mask-nd-array-or-None-default-None"><span class="nav-number">3.5.</span> <span class="nav-text">mask : nd-array or None (default=None)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#contour-width-float-default-0"><span class="nav-number">3.6.</span> <span class="nav-text">contour_width: float (default=0)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#contour-color-color-value-default-”black”"><span class="nav-number">3.7.</span> <span class="nav-text">contour_color: color value (default=”black”)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#scale-float-default-1"><span class="nav-number">3.8.</span> <span class="nav-text">scale : float (default=1)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#min-font-size-int-default-4"><span class="nav-number">3.9.</span> <span class="nav-text">min_font_size : int (default=4)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#font-step-int-default-1"><span class="nav-number">3.10.</span> <span class="nav-text">font_step : int (default=1)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max-words-number-default-200"><span class="nav-number">3.11.</span> <span class="nav-text">max_words : number (default=200)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#stopwords-set-of-strings-or-None"><span class="nav-number">3.12.</span> <span class="nav-text">stopwords : set of strings or None</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#background-color-color-value-default-”black”"><span class="nav-number">3.13.</span> <span class="nav-text">background_color : color value (default=”black”)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#max-font-size-int-or-None-default-None"><span class="nav-number">3.14.</span> <span class="nav-text">max_font_size : int or None (default=None)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#mode-string-default-”RGB”"><span class="nav-number">3.15.</span> <span class="nav-text">mode : string (default=”RGB”)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#relative-scaling-float-default-’auto’"><span class="nav-number">3.16.</span> <span class="nav-text">relative_scaling : float (default=’auto’)</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#color-func-callable-default-None"><span class="nav-number">3.17.</span> <span class="nav-text">color_func : callable, default=None</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#复现程序功能需要用到的素材"><span class="nav-number">3.18.</span> <span class="nav-text">复现程序功能需要用到的素材</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#致谢和引用"><span class="nav-number">3.19.</span> <span class="nav-text">致谢和引用</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#ps-1-本文为学生习作-应用于商业的行为是不被允许的-2-欢迎讨论词云制作的具体细节以及GUI制作和网络编程的实践-3-作者的最终目标是做一个免费易用但是比图悦功能更丰富的网络词云制作程序"><span class="nav-number">3.19.1.</span> <span class="nav-text">ps: 1.本文为学生习作,应用于商业的行为是不被允许的. 2.欢迎讨论词云制作的具体细节以及GUI制作和网络编程的实践. 3.作者的最终目标是做一个免费易用但是比图悦功能更丰富的网络词云制作程序</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2018 &mdash; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Tang Hangyun</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
